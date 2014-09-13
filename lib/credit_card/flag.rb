@@ -11,7 +11,7 @@ class CreditCard
         'Discover'
       elsif @number.to_s[0..1] == '51'
         'MasterCard'
-      elsif @number.to_s[0] == '4'
+      elsif @number.to_s[0] == '4' and (@number.to_s.length == 13 or @number.to_s.length == 16)
         'VISA'
       else
         'Unknown'
