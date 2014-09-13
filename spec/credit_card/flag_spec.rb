@@ -3,7 +3,7 @@ require_relative '../../lib/credit_card/flag'
 
 describe CreditCard::Flag do
   describe '#name' do
-    context 'existent name' do
+    context 'valid VISA' do
       it 'returns VISA' do
         credit_card_number = 4111111111111111
 
@@ -12,6 +12,26 @@ describe CreditCard::Flag do
         expect(credit_card_flag.name).to eq 'VISA'
       end
 
+      it 'returns VISA' do
+        credit_card_number = 4111111111111
+
+        credit_card_flag = CreditCard::Flag.new(credit_card_number) 
+
+        expect(credit_card_flag.name).to eq 'VISA'
+      end
+    end
+
+    context 'invalid VISA' do
+      it 'returns Unknown' do
+        credit_card_number = 41111111111
+
+        credit_card_flag = CreditCard::Flag.new(credit_card_number) 
+
+        expect(credit_card_flag.name).to eq 'Unknown'
+      end
+    end
+
+    context 'valid flag' do
       it 'returns AMEX' do
         credit_card_number = 378282246310005
 
