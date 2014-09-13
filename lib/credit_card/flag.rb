@@ -1,3 +1,5 @@
+require_relative './flag/visa'
+
 class CreditCard
   class Flag
     def initialize(number)
@@ -11,7 +13,7 @@ class CreditCard
         'Discover'
       elsif @number.to_s[0..1] == '51'
         'MasterCard'
-      elsif @number.to_s[0] == '4' and (@number.to_s.length == 13 or @number.to_s.length == 16)
+      elsif Visa.new(@number).valid?
         'VISA'
       else
         'Unknown'
