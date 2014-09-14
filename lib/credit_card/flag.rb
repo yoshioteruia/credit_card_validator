@@ -1,6 +1,7 @@
 require_relative './flag/visa'
 require_relative './flag/amex'
 require_relative './flag/discover'
+require_relative './flag/master_card'
 
 class CreditCard
   class Flag
@@ -11,9 +12,9 @@ class CreditCard
     def name
       if Amex.new(@number).valid?
         'AMEX'
-      elsif @number.to_s[0..3] == '6011'
+      elsif Discover.new(@number).valid?
         'Discover'
-      elsif @number.to_s[0..1] == '51'
+      elsif MasterCard.new(@number).valid?
         'MasterCard'
       elsif Visa.new(@number).valid?
         'VISA'
