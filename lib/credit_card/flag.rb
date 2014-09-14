@@ -1,4 +1,5 @@
 require_relative './flag/visa'
+require_relative './flag/amex'
 
 class CreditCard
   class Flag
@@ -7,7 +8,7 @@ class CreditCard
     end
 
     def name
-      if @number.to_s[0..1] == '37'
+      if Amex.new(@number).valid?
         'AMEX'
       elsif @number.to_s[0..3] == '6011'
         'Discover'

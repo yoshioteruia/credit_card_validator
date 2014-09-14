@@ -5,7 +5,7 @@ describe CreditCard::Flag do
   describe '#name' do
     context 'valid VISA' do
       it 'returns VISA' do
-        instance_double('CreditCard::Flag::Visa', valid?: true)
+        allow_any_instance_of(CreditCard::Flag::Visa).to receive(:valid?) { true }
         credit_card_number = 4111111111111111
 
         credit_card_flag = CreditCard::Flag.new(credit_card_number) 
@@ -16,7 +16,7 @@ describe CreditCard::Flag do
 
     context 'invalid VISA' do
       it 'returns Unknown' do
-        instance_double('CreditCard::Flag::Visa', valid?: false)
+        allow_any_instance_of(CreditCard::Flag::Visa).to receive(:valid?) { false }
         credit_card_number = 41111111111
 
         credit_card_flag = CreditCard::Flag.new(credit_card_number) 
@@ -25,15 +25,29 @@ describe CreditCard::Flag do
       end
     end
 
-    context 'valid flag' do
+    context 'valid AMEX' do
       it 'returns AMEX' do
+        allow_any_instance_of(CreditCard::Flag::Amex).to receive(:valid?) { true }
         credit_card_number = 378282246310005
 
         credit_card_flag = CreditCard::Flag.new(credit_card_number) 
 
         expect(credit_card_flag.name).to eq 'AMEX'
       end
+    end
 
+    context 'invalid AMEX' do
+      it 'returns AMEX' do
+        allow_any_instance_of(CreditCard::Flag::Amex).to receive(:valid?) { false }
+        credit_card_number = 3782822463
+
+        credit_card_flag = CreditCard::Flag.new(credit_card_number) 
+
+        expect(credit_card_flag.name).to eq 'Unknown'
+      end
+    end
+
+    context 'valid flag' do
       it 'returns Discover' do
         credit_card_number = 6011111111111117 
 
