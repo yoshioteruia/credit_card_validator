@@ -14,20 +14,31 @@ class CreditCard
   end
 
   def valid?
-    numbers = @number.to_s.reverse.split('').map.with_index do |n, i|
-      i += 1
-      n = n.to_i
-      if i.even?
-        sum = n + n
-        if sum.to_s.length > 1
-          sum.to_s.split('').map(&:to_i).inject(:+).to_i
-        else
-          sum
-        end
+    digits = @number.to_s.reverse.split('').map.with_index do |digit, position|
+      real_position = position + 1
+      digit = digit.to_i
+      if real_position.even?
+        digit = double_digit(digit)
+        sum_greater_than_10_digit(digit)
       else
-        n
+        digit
       end
     end
-    numbers.inject(:+) % 10 == 0
+
+    digits.inject(:+) % 10 == 0
+  end
+
+  private
+
+  def sum_greater_than_10_digit(digit)
+    if digit.to_s.length > 1
+      digit.to_s.split('').map(&:to_i).inject(:+).to_i
+    else
+      digit
+    end
+  end
+
+  def double_digit(digit)
+    digit * 2
   end
 end
