@@ -47,15 +47,29 @@ describe CreditCard::Flag do
       end
     end
 
-    context 'valid flag' do
+    context 'valid Discover' do
       it 'returns Discover' do
+        allow_any_instance_of(CreditCard::Flag::Discover).to receive(:valid?) { true }
         credit_card_number = 6011111111111117 
 
         credit_card_flag = CreditCard::Flag.new(credit_card_number) 
 
         expect(credit_card_flag.name).to eq 'Discover'
       end
+    end
 
+    context 'invalid Discover' do
+      it 'returns Discover' do
+        allow_any_instance_of(CreditCard::Flag::Discover).to receive(:valid?) { false }
+        credit_card_number = 6011111111111117 
+
+        credit_card_flag = CreditCard::Flag.new(credit_card_number) 
+
+        expect(credit_card_flag.name).to eq 'Discover'
+      end
+    end
+
+    context 'valid' do
       it 'returns MasterCard' do
         credit_card_number = 5105105105105100
 

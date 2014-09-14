@@ -1,5 +1,6 @@
 require_relative './flag/visa'
 require_relative './flag/amex'
+require_relative './flag/discover'
 
 class CreditCard
   class Flag
